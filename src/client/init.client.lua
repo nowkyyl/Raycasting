@@ -37,7 +37,7 @@ caster.RayHit:Connect(function(cast, raycastResult, velocity, bullet)
         local incomingDirection = velocity.Unit
         local reflection = incomingDirection - 2 * incomingDirection:Dot(normal) * normal
 
-        local newVelocity = (reflection * velocity.Magnitude) * 0.7
+        local newVelocity = (reflection * velocity.Magnitude) * 0.7 -- reduce 30%
         if newVelocity.Magnitude > 10 then
             caster:Fire(raycastResult.Position, newVelocity, newVelocity.Magnitude, castBehavior)
         end
@@ -53,6 +53,7 @@ UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
         local origin = ray.Origin
         local direction = ray.Direction * 1000
 
+        --                                         ↓ (BulletMass)    ↓ (Config 0.1 at 1)
         castBehavior.Acceleration = Vector3.new(0, 0.087 * 196.2 - 0.25 * 196.2, 0)
         local cast = caster:Fire(origin, direction, 500, castBehavior)
     end
